@@ -1,7 +1,15 @@
 server:
   port : 8090
+  servlet:
+    context-path: "/account-system"
 swagger:
   application:
     name: AccountSystem
     description: @project.description@
     version: @project.version@
+spring:
+  application:
+    name: AccountSystem
+  mvc:
+    servlet:
+      path: "/mvc"
