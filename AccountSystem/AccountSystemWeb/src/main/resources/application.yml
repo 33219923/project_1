@@ -1,2 +1,7 @@
 server:
   port : 8090
+swagger:
+  application:
+    name: AccountSystem
+    description: @project.description@
+    version: @project.version@
