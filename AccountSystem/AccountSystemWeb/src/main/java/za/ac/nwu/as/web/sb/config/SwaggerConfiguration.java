@@ -1,4 +1,4 @@
-package za.ac.nwu.as.web.sb;
+package za.ac.nwu.as.web.sb.config;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -26,6 +26,13 @@ public class SwaggerConfiguration {
     @Value("${swagger.application.description}")
     private String applicationDescription;
 
+    @Value("${swagger.application.contact.name}")
+    private String contactName;
+    @Value("${swagger.application.contact.email}")
+    private String contactEmail;
+    @Value("${swagger.application.contact.url}")
+    private String contactUrl;
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
@@ -43,7 +50,7 @@ public class SwaggerConfiguration {
                 applicationDescription,
                 applicationVersion,
                 "",
-                new Contact("Petrus AJ Brand - 33219923", "", "33219923@student.g.nwu.ac.za"),
+                new Contact(contactName, contactUrl, contactEmail),
                 "",
                 "",
                 Collections.emptyList());

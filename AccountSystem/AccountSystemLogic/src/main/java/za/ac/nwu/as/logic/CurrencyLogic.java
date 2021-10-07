@@ -3,7 +3,6 @@ package za.ac.nwu.as.logic;
 import org.springframework.util.StringUtils;
 import za.ac.nwu.as.translator.models.request.UpsertCurrencyRequest;
 import za.ac.nwu.as.translator.models.response.CurrencyDto;
-import za.ac.nwu.as.translator.models.response.GeneralResponse;
 
 public class CurrencyLogic {
 

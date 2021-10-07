@@ -7,7 +7,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import za.ac.nwu.as.logic.CurrencyLogic;
 import za.ac.nwu.as.translator.models.request.UpsertCurrencyRequest;
-import za.ac.nwu.as.translator.models.response.GeneralResponse;
+import za.ac.nwu.as.domain.service.GeneralResponse;
+import za.ac.nwu.as.translator.models.response.CurrencyDto;
 
 import java.util.Date;
 
@@ -17,8 +18,8 @@ public class CurrencyController {
 
     @PostMapping("/upsertcurrency")
     @ApiOperation(value = "Upsert Currency", notes = "Create or update an existing currency.")
-    public ResponseEntity<GeneralResponse> UpsertCurrency(@RequestBody() UpsertCurrencyRequest currencyRequest) {
-        var response = new GeneralResponse();
+    public ResponseEntity<GeneralResponse<CurrencyDto>> UpsertCurrency(@RequestBody() UpsertCurrencyRequest currencyRequest) {
+        var response = new GeneralResponse<CurrencyDto>();
         try {
 
             //Validate request body

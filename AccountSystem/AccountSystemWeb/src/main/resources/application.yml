@@ -7,6 +7,10 @@ swagger:
     name: AccountSystem
     description: @project.description@
     version: @project.version@
+    contact:
+      name: "Petrus AJ Brand - 33219923"
+      email: "33219923@student.g.nwu.ac.za"
+      url: ""
 spring:
   application:
     name: AccountSystem

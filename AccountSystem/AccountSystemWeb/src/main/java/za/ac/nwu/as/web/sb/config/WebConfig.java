@@ -1,4 +1,4 @@
-package za.ac.nwu.as.web.sb;
+package za.ac.nwu.as.web.sb.config;
 
 import org.springframework.context.annotation.ComponentScan;
         import org.springframework.context.annotation.Configuration;

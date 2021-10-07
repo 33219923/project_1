@@ -6,10 +6,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import za.ac.nwu.as.logic.AccountLogic;
-import za.ac.nwu.as.logic.CurrencyLogic;
 import za.ac.nwu.as.translator.models.request.DecreaseAccountBalanceRequest;
 import za.ac.nwu.as.translator.models.request.IncreaseAccountBalanceRequest;
-import za.ac.nwu.as.translator.models.response.GeneralResponse;
+import za.ac.nwu.as.domain.service.GeneralResponse;
+import za.ac.nwu.as.translator.models.response.UserAccountDto;
 
 import java.util.Date;
 
@@ -19,8 +19,8 @@ public class AccountController {
 
     @PostMapping("/increasebalance")
     @ApiOperation(value = "Increase Balance", notes = "Create a new account if it does not exist and increase the remaining balance of the account.")
-    public ResponseEntity<GeneralResponse> IncreaseBalance(@RequestBody() IncreaseAccountBalanceRequest increaseRequest) {
-        var response = new GeneralResponse();
+    public ResponseEntity<GeneralResponse<UserAccountDto>> IncreaseBalance(@RequestBody() IncreaseAccountBalanceRequest increaseRequest) {
+        var response = new GeneralResponse<UserAccountDto>();
         try {
 
             //Validate request body
@@ -60,8 +60,8 @@ public class AccountController {
 
     @PostMapping("/decreasebalance")
     @ApiOperation(value = "Decrease Balance", notes = "Decrease the remaining balance of the account. ")
-    public ResponseEntity<GeneralResponse> DecreaseBalance(@RequestBody() DecreaseAccountBalanceRequest decreaseRequest) {
-        var response = new GeneralResponse();
+    public ResponseEntity<GeneralResponse<UserAccountDto>> DecreaseBalance(@RequestBody() DecreaseAccountBalanceRequest decreaseRequest) {
+        var response = new GeneralResponse<UserAccountDto>();
         try {
 
             //Validate request body
@@ -101,8 +101,8 @@ public class AccountController {
 
     @GetMapping("/viewbalance")
     @ApiOperation(value = "View Balance", notes = "View the remaining account balance for an account.")
-    public ResponseEntity<GeneralResponse> ViewBalance(@RequestParam() String accountId) {
-        var response = new GeneralResponse();
+    public ResponseEntity<GeneralResponse<UserAccountDto>> ViewBalance(@RequestParam() String accountId) {
+        var response = new GeneralResponse<UserAccountDto>();
         try {
             //Validate request params
             if (StringUtils.isEmpty(accountId)) {

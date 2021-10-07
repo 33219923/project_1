@@ -1,9 +1,8 @@
-package za.ac.nwu.as.translator.models.response;
+package za.ac.nwu.as.domain.service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import za.ac.nwu.as.translator.interfaces.IResponseData;
 
-public class GeneralResponse {
+public class GeneralResponse<T> {
     @JsonProperty("success")
     public boolean Success = true;
 
@@ -11,5 +10,5 @@ public class GeneralResponse {
     public String ErrorMessage;
 
     @JsonProperty("data")
-    public IResponseData Data;
+    public T Data;
 }
