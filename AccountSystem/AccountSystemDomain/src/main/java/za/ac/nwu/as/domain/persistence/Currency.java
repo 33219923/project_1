@@ -1,7 +1,5 @@
 package za.ac.nwu.as.domain.persistence;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -10,9 +8,9 @@ import java.util.Set;
 import java.util.UUID;
 
 @Entity
-@Table(name = "CURRENCY")
+@Table(name = "CURRENCIES")
 public class Currency implements Serializable {
-    private UUID id;
+    private Long id;
     private String name;
     private String description;
     private String symbol;
@@ -22,7 +20,7 @@ public class Currency implements Serializable {
     public Currency() {
     }
 
-    public Currency(UUID id, String name, String description, String symbol, LocalDate createdDate, Set<Account> accounts) {
+    public Currency(Long id, String name, String description, String symbol, LocalDate createdDate, Set<Account> accounts) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -32,14 +30,14 @@ public class Currency implements Serializable {
     }
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @SequenceGenerator(name= "CURRENCY_GENERIC_SEQ", sequenceName = "CURRENCY_GENERIC_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CURRENCY_GENERIC_SEQ" )
     @Column(name = "CURRENCY_ID", updatable = false, nullable = false)
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -79,7 +77,7 @@ public class Currency implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @OneToMany(targetEntity = Currency.class, fetch = FetchType.LAZY, mappedBy = "currency", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToMany(targetEntity = Account.class, fetch = FetchType.LAZY, mappedBy = "currency", orphanRemoval = true, cascade = CascadeType.PERSIST)
     public Set<Account> getAccounts() {
         return accounts;
     }

@@ -5,12 +5,11 @@ import io.swagger.annotations.ApiModelProperty;
 import za.ac.nwu.as.domain.persistence.Account;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @ApiModel(value = "Account", description = "A DTO that represents the member account.")
 public class AccountDto implements Serializable {
 
-    private UUID accountId;
+    private Long accountId;
 
     public AccountDto() {
     }
@@ -27,11 +26,11 @@ public class AccountDto implements Serializable {
             example = "",
             required = false
     )
-    public UUID getAccountId() {
+    public Long getAccountId() {
         return accountId;
     }
 
-    public void setAccountId(UUID accountId) {
+    public void setAccountId(Long accountId) {
         this.accountId = accountId;
     }
 }

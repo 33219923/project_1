@@ -1,19 +1,16 @@
 package za.ac.nwu.as.domain.persistence;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
-@Table(name="ACCOUNT" )
+@Table(name="ACCOUNTS" )
 public class Account implements Serializable {
 
-    private UUID id;
+    private Long id;
     private Currency currency;
     private double balance;
     private LocalDate startDate;
@@ -23,7 +20,7 @@ public class Account implements Serializable {
     public Account() {
     }
 
-    public Account(UUID id, Currency currency, double balance, LocalDate startDate, LocalDate createdDate, Set<Transaction> transactions) {
+    public Account(Long id, Currency currency, double balance, LocalDate startDate, LocalDate createdDate, Set<Transaction> transactions) {
         this.id = id;
         this.currency = currency;
         this.balance = balance;
@@ -33,14 +30,14 @@ public class Account implements Serializable {
     }
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @SequenceGenerator(name= "ACCOUNT_GENERIC_SEQ", sequenceName = "ACCOUNT_GENERIC_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACCOUNT_GENERIC_SEQ" )
     @Column(name = "ACCOUNT_ID", updatable = false, nullable = false)
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

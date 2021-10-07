@@ -6,10 +6,11 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.UUID;
 
+@Entity
+@Table(name="TRANSACTIONS" )
 public class Transaction implements Serializable {
-    private UUID id;
+    private Long id;
     private Account account;
     private TransactionType type;
     private double value;
@@ -18,14 +19,18 @@ public class Transaction implements Serializable {
     public Transaction() {
     }
 
-    public Transaction(UUID id, TransactionType type, double value, LocalDate createdDate) {
+    public Transaction(Long id, TransactionType type, double value, LocalDate createdDate) {
         this.id = id;
         this.type = type;
         this.value = value;
         this.createdDate = createdDate;
     }
 
-    public UUID getId() {
+    @Id
+    @SequenceGenerator(name= "TRANSACTION_GENERIC_SEQ", sequenceName = "TRANSACTION_GENERIC_SEQ", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TRANSACTION_GENERIC_SEQ" )
+    @Column(name = "TRANSACTION_ID", updatable = false, nullable = false)
+    public Long getId() {
         return id;
     }
 
@@ -39,7 +44,7 @@ public class Transaction implements Serializable {
         this.account = account;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -8,5 +8,5 @@ import za.ac.nwu.as.domain.persistence.Currency;
 import java.util.UUID;
 
 @Repository
-public interface CurrencyRepository extends JpaRepository<Currency, UUID> {
+public interface CurrencyRepository extends JpaRepository<Currency, Long> {
 }

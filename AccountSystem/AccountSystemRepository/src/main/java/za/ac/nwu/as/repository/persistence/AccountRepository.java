@@ -7,6 +7,6 @@ import za.ac.nwu.as.domain.persistence.Account;
 import java.util.UUID;
 
 @Repository
-public interface AccountRepository extends JpaRepository<Account, UUID> {
+public interface AccountRepository extends JpaRepository<Account, Long> {
 }
 

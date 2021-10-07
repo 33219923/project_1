@@ -7,10 +7,10 @@ import java.util.UUID;
 
 public class IncreaseAccountBalanceRequest {
     @JsonProperty("accountId")
-    public UUID AccountId;
+    public Long AccountId;
 
     @JsonProperty("amount")
-    public double Amount;
+    public Double Amount;
 
     @JsonProperty(value = "startDate", required = false)
     public Date StartDate;

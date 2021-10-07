@@ -9,8 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import za.ac.nwu.as.domain.dto.AccountDto;
-import za.ac.nwu.as.logic.services.AccountService;
-import za.ac.nwu.as.logic.services.interfaces.IAccountService;
+import za.ac.nwu.as.logic.services.IAccountService;
 import za.ac.nwu.as.translator.models.request.DecreaseAccountBalanceRequest;
 import za.ac.nwu.as.translator.models.request.IncreaseAccountBalanceRequest;
 import za.ac.nwu.as.domain.service.GeneralResponse;
@@ -24,7 +23,7 @@ public class AccountController {
     private final IAccountService _accountService;
 
     @Autowired
-    public AccountController(AccountService accountService) {
+    public AccountController(IAccountService accountService) {
         this._accountService = accountService;
     }
 

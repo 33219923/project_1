@@ -1,10 +1,11 @@
-package za.ac.nwu.as.logic.services;
+package za.ac.nwu.as.logic.services.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import za.ac.nwu.as.domain.dto.CurrencyDto;
-import za.ac.nwu.as.logic.services.interfaces.ICurrencyService;
-import za.ac.nwu.as.translator.CurrencyTranslator;
+import za.ac.nwu.as.logic.services.ICurrencyService;
+import za.ac.nwu.as.translator.services.ICurrencyTranslator;
 import za.ac.nwu.as.translator.models.request.UpsertCurrencyRequest;
 
 import javax.transaction.Transactional;
@@ -13,9 +14,10 @@ import javax.transaction.Transactional;
 @Component
 public class CurrencyService implements ICurrencyService {
 
-    private final CurrencyTranslator currencyTranslator;
+    private final ICurrencyTranslator currencyTranslator;
 
-    public CurrencyService(CurrencyTranslator currencyTranslator) {
+    @Autowired
+    public CurrencyService(ICurrencyTranslator currencyTranslator) {
         this.currencyTranslator = currencyTranslator;
     }
 

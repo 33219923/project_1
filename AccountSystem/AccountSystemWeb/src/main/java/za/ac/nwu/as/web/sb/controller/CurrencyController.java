@@ -8,8 +8,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import za.ac.nwu.as.domain.dto.CurrencyDto;
 import za.ac.nwu.as.domain.service.GeneralResponse;
-import za.ac.nwu.as.logic.services.CurrencyService;
-import za.ac.nwu.as.logic.services.interfaces.ICurrencyService;
+import za.ac.nwu.as.logic.services.ICurrencyService;
 import za.ac.nwu.as.translator.models.request.UpsertCurrencyRequest;
 
 import java.util.Date;
@@ -21,7 +20,7 @@ public class CurrencyController {
     private final ICurrencyService _currencyService;
 
     @Autowired
-    public CurrencyController(CurrencyService currencyService) {
+    public CurrencyController(ICurrencyService currencyService) {
         this._currencyService = currencyService;
     }
 
