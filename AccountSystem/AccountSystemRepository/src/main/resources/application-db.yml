@@ -1,7 +1,8 @@
 #Config for PostgresSql
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/cmpg323
+    #url: jdbc:postgresql://localhost:5432/cmpg323
+    url: jdbc:http://localhost:54320/cmpg323
     username: docker
     password: postgres
   jpa:

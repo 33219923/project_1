@@ -1,22 +1,27 @@
 package za.ac.nwu.as.logic.services;
 
+import org.springframework.stereotype.Component;
+import za.ac.nwu.as.domain.dto.AccountDto;
 import za.ac.nwu.as.logic.services.interfaces.IAccountService;
 import za.ac.nwu.as.translator.models.request.DecreaseAccountBalanceRequest;
 import za.ac.nwu.as.translator.models.request.IncreaseAccountBalanceRequest;
-import za.ac.nwu.as.translator.models.response.UserAccountDto;
 
+import javax.transaction.Transactional;
+
+@Transactional
+@Component
 public class AccountService implements IAccountService {
 
-    public static UserAccountDto IncreaseBalance(IncreaseAccountBalanceRequest increaseRequest) {
-        return new UserAccountDto();
+    public AccountDto increaseBalance(IncreaseAccountBalanceRequest increaseRequest) {
+        return new AccountDto();
     }
 
-    public static UserAccountDto DecreaseBalance(DecreaseAccountBalanceRequest decreaseRequest) {
-        return new UserAccountDto();
+    public AccountDto decreaseBalance(DecreaseAccountBalanceRequest decreaseRequest) {
+        return new AccountDto();
     }
 
-    public static UserAccountDto ViewBalance(String accountId) {
+    public AccountDto viewBalance(String accountId) {
 
-        return new UserAccountDto();
+        return new AccountDto();
     }
 }

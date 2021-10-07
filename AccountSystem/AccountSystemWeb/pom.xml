@@ -22,12 +22,14 @@
             <groupId>za.ac.nwu.as</groupId>
             <artifactId>AccountSystemDomain</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
             <groupId>za.ac.nwu.as</groupId>
             <artifactId>AccountSystemLogic</artifactId>
             <version>${project.version}</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>

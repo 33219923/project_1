@@ -1,15 +1,19 @@
 package za.ac.nwu.as.web.sb.controller;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+import za.ac.nwu.as.domain.dto.AccountDto;
 import za.ac.nwu.as.logic.services.AccountService;
+import za.ac.nwu.as.logic.services.interfaces.IAccountService;
 import za.ac.nwu.as.translator.models.request.DecreaseAccountBalanceRequest;
 import za.ac.nwu.as.translator.models.request.IncreaseAccountBalanceRequest;
 import za.ac.nwu.as.domain.service.GeneralResponse;
-import za.ac.nwu.as.translator.models.response.UserAccountDto;
 
 import java.util.Date;
 
@@ -17,10 +21,25 @@ import java.util.Date;
 @RequestMapping("account")
 public class AccountController {
 
+    private final IAccountService _accountService;
+
+    @Autowired
+    public AccountController(AccountService accountService) {
+        this._accountService = accountService;
+    }
+
+
+    //TODO: Complete the api responses for every api
     @PostMapping("/increasebalance")
     @ApiOperation(value = "Increase Balance", notes = "Create a new account if it does not exist and increase the remaining balance of the account.")
-    public ResponseEntity<GeneralResponse<UserAccountDto>> IncreaseBalance(@RequestBody() IncreaseAccountBalanceRequest increaseRequest) {
-        var response = new GeneralResponse<UserAccountDto>();
+    @ApiResponses(value = {
+            @ApiResponse(code=200, message = "Account Updated/Created", response = GeneralResponse.class),
+            @ApiResponse(code=200, message = "Bad request", response = GeneralResponse.class),
+            @ApiResponse(code=404, message = "Not found", response = GeneralResponse.class),
+            @ApiResponse(code=500, message = "Internal Server Error", response = GeneralResponse.class)
+    })
+    public ResponseEntity<GeneralResponse<AccountDto>> IncreaseBalance(@RequestBody() IncreaseAccountBalanceRequest increaseRequest) {
+        var response = new GeneralResponse<AccountDto>();
         try {
 
             //Validate request body
@@ -33,7 +52,7 @@ public class AccountController {
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
-            var data = AccountService.IncreaseBalance(increaseRequest);
+            var data = _accountService.increaseBalance(increaseRequest);
 
             if(data == null)
             {
@@ -60,8 +79,8 @@ public class AccountController {
 
     @PostMapping("/decreasebalance")
     @ApiOperation(value = "Decrease Balance", notes = "Decrease the remaining balance of the account. ")
-    public ResponseEntity<GeneralResponse<UserAccountDto>> DecreaseBalance(@RequestBody() DecreaseAccountBalanceRequest decreaseRequest) {
-        var response = new GeneralResponse<UserAccountDto>();
+    public ResponseEntity<GeneralResponse<AccountDto>> DecreaseBalance(@RequestBody() DecreaseAccountBalanceRequest decreaseRequest) {
+        var response = new GeneralResponse<AccountDto>();
         try {
 
             //Validate request body
@@ -74,7 +93,7 @@ public class AccountController {
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
-            var data = AccountService.DecreaseBalance(decreaseRequest);
+            var data = _accountService.decreaseBalance(decreaseRequest);
 
             if(data == null)
             {
@@ -101,8 +120,8 @@ public class AccountController {
 
     @GetMapping("/viewbalance")
     @ApiOperation(value = "View Balance", notes = "View the remaining account balance for an account.")
-    public ResponseEntity<GeneralResponse<UserAccountDto>> ViewBalance(@RequestParam() String accountId) {
-        var response = new GeneralResponse<UserAccountDto>();
+    public ResponseEntity<GeneralResponse<AccountDto>> ViewBalance(@RequestParam() String accountId) {
+        var response = new GeneralResponse<AccountDto>();
         try {
             //Validate request params
             if (StringUtils.isEmpty(accountId)) {
@@ -114,7 +133,7 @@ public class AccountController {
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
-            var data = AccountService.ViewBalance(accountId);
+            var data = _accountService.viewBalance(accountId);
 
             if(data == null)
             {
@@ -139,7 +158,7 @@ public class AccountController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("/healthcheck")
     @ApiOperation(value = "Health check", notes = "Health check is used to ensure the api is up and running.")
     public ResponseEntity<String> HealthCheck() {
         return new ResponseEntity<>("The service " + this.getClass().getSimpleName() + " is up and running at " + new Date(), HttpStatus.OK);

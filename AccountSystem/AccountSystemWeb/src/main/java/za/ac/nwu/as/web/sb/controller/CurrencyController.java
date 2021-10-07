@@ -1,20 +1,35 @@
 package za.ac.nwu.as.web.sb.controller;
 
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import za.ac.nwu.as.logic.services.CurrencyService;
-import za.ac.nwu.as.translator.models.request.UpsertCurrencyRequest;
+import za.ac.nwu.as.domain.dto.CurrencyDto;
 import za.ac.nwu.as.domain.service.GeneralResponse;
-import za.ac.nwu.as.translator.models.response.CurrencyDto;
+import za.ac.nwu.as.logic.services.CurrencyService;
+import za.ac.nwu.as.logic.services.interfaces.ICurrencyService;
+import za.ac.nwu.as.translator.models.request.UpsertCurrencyRequest;
 
 import java.util.Date;
 
 @RestController
 @RequestMapping("currency")
 public class CurrencyController {
+
+    private final ICurrencyService _currencyService;
+
+    @Autowired
+    public CurrencyController(CurrencyService currencyService) {
+        this._currencyService = currencyService;
+    }
+
+    @GetMapping("/list")
+    @ApiOperation(value = "Retrieve All Currencies", notes = "Returns a list of all the available currencies.")
+    public ResponseEntity<String> ListALl() {
+        return new ResponseEntity<>("The service " + this.getClass().getSimpleName() + " is up and running at " + new Date(), HttpStatus.OK);
+    }
 
     @PostMapping("/upsertcurrency")
     @ApiOperation(value = "Upsert Currency", notes = "Create or update an existing currency.")
@@ -33,7 +48,7 @@ public class CurrencyController {
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
-            var data = CurrencyService.UpsertCurrency(currencyRequest);
+            var data = _currencyService.UpsertCurrency(currencyRequest);
 
             if(data == null)
             {
@@ -58,7 +73,7 @@ public class CurrencyController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/")
+    @GetMapping("/healthcheck")
     @ApiOperation(value = "Health check", notes = "Health check is used to ensure the api is up and running.")
     public ResponseEntity<String> HealthCheck() {
         return new ResponseEntity<>("The service " + this.getClass().getSimpleName() + " is up and running at " + new Date(), HttpStatus.OK);
