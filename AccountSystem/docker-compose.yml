@@ -1,5 +1,18 @@
 version: "3"
 services:
+  postgres:
+    image: postgres
+    restart: always
+    environment: 
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: docker
+    ports: 
+      -  "55002:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      static-network:
+        ipv4_address: 172.21.0.1
   account-system:
     image: account-system:latest
     restart: always

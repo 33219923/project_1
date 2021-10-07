@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import za.ac.nwu.as.logic.AccountLogic;
+import za.ac.nwu.as.logic.services.AccountService;
 import za.ac.nwu.as.translator.models.request.DecreaseAccountBalanceRequest;
 import za.ac.nwu.as.translator.models.request.IncreaseAccountBalanceRequest;
 import za.ac.nwu.as.domain.service.GeneralResponse;
@@ -33,7 +33,7 @@ public class AccountController {
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
-            var data = AccountLogic.IncreaseBalance(increaseRequest);
+            var data = AccountService.IncreaseBalance(increaseRequest);
 
             if(data == null)
             {
@@ -74,7 +74,7 @@ public class AccountController {
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
-            var data = AccountLogic.DecreaseBalance(decreaseRequest);
+            var data = AccountService.DecreaseBalance(decreaseRequest);
 
             if(data == null)
             {
@@ -114,7 +114,7 @@ public class AccountController {
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
-            var data = AccountLogic.ViewBalance(accountId);
+            var data = AccountService.ViewBalance(accountId);
 
             if(data == null)
             {

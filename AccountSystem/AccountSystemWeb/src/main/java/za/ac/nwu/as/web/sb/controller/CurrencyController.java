@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
-import za.ac.nwu.as.logic.CurrencyLogic;
+import za.ac.nwu.as.logic.services.CurrencyService;
 import za.ac.nwu.as.translator.models.request.UpsertCurrencyRequest;
 import za.ac.nwu.as.domain.service.GeneralResponse;
 import za.ac.nwu.as.translator.models.response.CurrencyDto;
@@ -33,7 +33,7 @@ public class CurrencyController {
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
             }
 
-            var data = CurrencyLogic.UpsertCurrency(currencyRequest);
+            var data = CurrencyService.UpsertCurrency(currencyRequest);
 
             if(data == null)
             {
