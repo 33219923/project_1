@@ -1,26 +1,33 @@
 version: "3"
 services:
-  postgres:
+  db:
     image: postgres
     restart: always
     environment: 
+      POSTGRES_DB: cmpg323
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
     ports: 
-      -  "54319:5432"
+      -  "55002:5432"
+    volumes:
+      - c:/DO/nwu/docker/postgis/data:/var/lib/postgresql
     networks:
       static-network:
         ipv4_address: 172.21.0.2
   account-system:
-    image: account-system:latest
+    build: .
     restart: always
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/cmpg323
     ports: 
       -  "55001:8090"
     networks:
       static-network:
         ipv4_address: 172.21.0.3
+    volumes:
+      - c:/DO/nwu/docker/logs:/DO/nwu/logs
     depends_on:
-      - "postgres"
+      - "db"
 networks:
   static-network:
     ipam:

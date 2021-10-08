@@ -100,6 +100,7 @@ public class CurrencyController {
     @GetMapping("/healthcheck")
     @ApiOperation(value = "Health check", notes = "Health check is used to ensure the api is up and running.")
     public ResponseEntity<String> HealthCheck() {
+        LOGGER.info("Healthcheck called for {} at {}", this.getClass().getSimpleName(), new Date());
         return new ResponseEntity<>("The service " + this.getClass().getSimpleName() + " is up and running at " + new Date(), HttpStatus.OK);
     }
 }

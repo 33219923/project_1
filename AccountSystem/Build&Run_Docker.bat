@@ -1,4 +1,3 @@
-docker image build -t account-system:latest .
-
+docker-compose build
 docker-compose up -d
 PAUSE
