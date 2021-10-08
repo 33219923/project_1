@@ -1,5 +1,7 @@
 package za.ac.nwu.as.logic.services.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import za.ac.nwu.as.domain.dto.AccountDto;
@@ -13,6 +15,8 @@ import javax.transaction.Transactional;
 @Transactional
 @Component
 public class AccountService implements IAccountService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountService.class);
 
     private final IAccountTranslator accountTranslator;
 

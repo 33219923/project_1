@@ -17,3 +17,9 @@ spring:
   mvc:
     servlet:
       path: "/mvc"
+za:
+  ac:
+    nwu:
+      as:
+        logging:
+          filepath: "/DO/nwu/logs"

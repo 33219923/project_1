@@ -3,12 +3,15 @@ package za.ac.nwu.as.translator.services.impl;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.springframework.test.context.junit4.SpringRunner;
 import za.ac.nwu.as.repository.persistence.CurrencyRepository;
 
 import static org.junit.Assert.*;
 
+@RunWith(SpringRunner.class)
 public class CurrencyTranslatorTest {
 
     @Mock

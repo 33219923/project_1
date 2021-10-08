@@ -1,5 +1,7 @@
 package za.ac.nwu.as.logic.services.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -14,6 +16,8 @@ import java.util.List;
 @Transactional
 @Component
 public class CurrencyService implements ICurrencyService {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyService.class);
 
     private final ICurrencyTranslator currencyTranslator;
 

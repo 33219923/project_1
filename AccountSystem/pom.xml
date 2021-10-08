@@ -88,9 +88,9 @@
                             <rule>
                                 <element>CLASS</element>
                                 <excludes>
-                                    <exclude>package za.ac.nwu.as.login.config.LogicConfig</exclude>
-                                    <exclude>package za.ac.nwu.as.login.translator.TranslatorConfig</exclude>
-                                    <exclude>package za.ac.nwu.as.login.repository.RepositoryConfig</exclude>
+                                    <exclude>za.ac.nwu.as.domain.config.LogicConfig</exclude>
+                                    <exclude>za.ac.nwu.as.translator.config.TranslatorConfig</exclude>
+                                    <exclude>za.ac.nwu.as.repository.config.RepositoryConfig</exclude>
                                 </excludes>
                                 <limits>
                                     <limit>

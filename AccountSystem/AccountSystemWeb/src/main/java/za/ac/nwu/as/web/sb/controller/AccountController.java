@@ -3,6 +3,8 @@ package za.ac.nwu.as.web.sb.controller;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import za.ac.nwu.as.domain.dto.AccountDto;
 import za.ac.nwu.as.logic.services.IAccountService;
+import za.ac.nwu.as.logic.services.impl.CurrencyService;
 import za.ac.nwu.as.translator.models.request.DecreaseAccountBalanceRequest;
 import za.ac.nwu.as.translator.models.request.IncreaseAccountBalanceRequest;
 import za.ac.nwu.as.domain.service.GeneralResponse;
@@ -19,6 +22,8 @@ import java.util.Date;
 @RestController
 @RequestMapping("account")
 public class AccountController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountController.class);
 
     private final IAccountService _accountService;
 

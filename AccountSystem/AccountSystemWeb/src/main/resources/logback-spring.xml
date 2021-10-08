@@ -1,0 +1,63 @@
+<configuration scan="false" scanPeriod="5 seconds">
+    <springProperty scope="context" name="LOG_DIR" source="za.ac.nwu.as.logging.filepath"/>
+    <appender name="ROLLING_FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/ServerLog.log</file>
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>{ "date" : "%d{dd-MM-yyyy HH:mm:ss.SSS}", "level" : "%-5level", "class" : "%logger{36}", " Log" :
+                %msg }%n
+            </Pattern>
+        </encoder>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_DIR}/ServerLog.%d{yyyy-MM-dd-HH}.%i.log.gz</fileNamePattern>
+            <!-- each file should be at most 50MB, keep 2 hours worth of
+           history, but at most 200MB -->
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>10</maxHistory>
+            <totalSizeCap>200MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%highlight(%d{yyyy/MM/dd HH:mm:ss} [%-5level]
+                %logger@%line -> %msg) %n
+            </Pattern>
+        </encoder>
+    </appender>
+    <!-- Third party configurations -->
+    <logger name="java" level="WARN"/>
+    <logger name="javax" level="WARN"/>
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.hibernate" level="WARN"/>
+    <root level="WARN">
+        <appender-ref ref="ROLLING_FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+    <appender name="ACCOUNT_SYSTEM_ROLLING_FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/AccountSystem.log</file>
+        <encoder
+                class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>{ "date" : "%d{dd-MM-yyyy HH:mm:ss.SSS}", "level" : "%-5level", "class" :
+                "%logger{36}", " Log" : 4 %msg }%n
+            </Pattern>
+        </encoder>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${LOG_DIR}/AccountSystem.%d{yyyy-MM-dd-HH}.%i.log.gz</fileNamePattern>
+            <!-- each file should be at most 50MB, keep 2 hours worth of
+           history, but at most 200MB -->
+            <maxFileSize>50MB</maxFileSize>
+            <maxHistory>24</maxHistory>
+            <totalSizeCap>200MB</totalSizeCap>
+        </rollingPolicy>
+    </appender>
+    <logger name="za.ac.nwu.as" level="DEBUG" additivity="false">
+        <appender-ref ref="ACCOUNT_SYSTEM_ROLLING_FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+</configuration>

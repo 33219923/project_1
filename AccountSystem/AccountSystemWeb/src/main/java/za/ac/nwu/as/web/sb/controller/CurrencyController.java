@@ -1,6 +1,8 @@
 package za.ac.nwu.as.web.sb.controller;
 
 import io.swagger.annotations.ApiOperation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,8 @@ import java.util.List;
 @RestController
 @RequestMapping("currency")
 public class CurrencyController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyController.class);
 
     private final ICurrencyService currencyService;
 
