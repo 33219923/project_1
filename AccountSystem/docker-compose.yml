@@ -7,12 +7,10 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: docker
     ports: 
-      -  "55002:5432"
-    volumes:
-      - pgdata:/var/lib/postgresql/data
+      -  "54319:5432"
     networks:
       static-network:
-        ipv4_address: 172.21.0.1
+        ipv4_address: 172.21.0.2
   account-system:
     image: account-system:latest
     restart: always
@@ -20,7 +18,9 @@ services:
       -  "55001:8090"
     networks:
       static-network:
-        ipv4_address: 172.21.0.2
+        ipv4_address: 172.21.0.3
+    depends_on:
+      - "postgres"
 networks:
   static-network:
     ipam:
