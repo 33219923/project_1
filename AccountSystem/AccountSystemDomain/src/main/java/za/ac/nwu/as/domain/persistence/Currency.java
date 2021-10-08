@@ -19,6 +19,13 @@ public class Currency implements Serializable {
 
     public Currency() {
     }
+    public Currency(Long id, String name, String description, String symbol, LocalDate createdDate) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.symbol = symbol;
+        this.createdDate = createdDate;
+    }
 
     public Currency(Long id, String name, String description, String symbol, LocalDate createdDate, Set<Account> accounts) {
         this.id = id;

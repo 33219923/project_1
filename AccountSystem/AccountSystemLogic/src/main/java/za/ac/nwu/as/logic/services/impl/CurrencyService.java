@@ -9,6 +9,7 @@ import za.ac.nwu.as.translator.services.ICurrencyTranslator;
 import za.ac.nwu.as.translator.models.request.UpsertCurrencyRequest;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 @Transactional
 @Component
@@ -22,16 +23,12 @@ public class CurrencyService implements ICurrencyService {
     }
 
     @Override
-    public CurrencyDto UpsertCurrency(UpsertCurrencyRequest currencyRequest) {
-        //Handle upsert logic - When id is empty or null add a new currency else update existing currency
-        if (StringUtils.isEmpty(currencyRequest.Id)) {
-            //Add new currency
-            this.currencyTranslator.upsert(new CurrencyDto());
-        } else {
-            //Update existing currency
-            this.currencyTranslator.upsert(new CurrencyDto());
-        }
+    public List<CurrencyDto> listAll() {
+        return currencyTranslator.getAllCurrencies();
+    }
 
-        return new CurrencyDto();
+    @Override
+    public CurrencyDto upsertCurrency(CurrencyDto currency) {
+        return this.currencyTranslator.upsert(currency);
     }
 }
