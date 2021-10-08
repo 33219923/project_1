@@ -69,7 +69,7 @@ public class AccountControllerTest {
                     .contentType(MediaType.APPLICATION_JSON)
                 ).andExpect(status().isOk())
                 .andReturn();
-        
+
         verify(accountService, never()).viewBalance(anyString()); //Check correct method check to ensure errors etc
         verify(accountService, times(1)).viewBalance(anyString()); //Check correct method
         assertEquals(expectedResponse, mvcResult.getResponse().getContentAsString());
