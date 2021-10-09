@@ -5,7 +5,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import java.util.Set;
-import java.util.UUID;
 
 @Entity
 @Table(name = "CURRENCIES")
@@ -15,7 +14,7 @@ public class Currency implements Serializable {
     private String description;
     private String symbol;
     private LocalDate createdDate;
-    private Set<Account> accounts;
+    private Set<Transaction> transactions;
 
     public Currency() {
     }
@@ -27,13 +26,13 @@ public class Currency implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Currency(Long id, String name, String description, String symbol, LocalDate createdDate, Set<Account> accounts) {
+    public Currency(Long id, String name, String description, String symbol, LocalDate createdDate, Set<Transaction> transactions) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.symbol = symbol;
         this.createdDate = createdDate;
-        this.accounts = accounts;
+        this.transactions = transactions;
     }
 
     @Id
@@ -84,13 +83,13 @@ public class Currency implements Serializable {
         this.createdDate = createdDate;
     }
 
-    @OneToMany(targetEntity = Account.class, fetch = FetchType.LAZY, mappedBy = "currency", orphanRemoval = true, cascade = CascadeType.PERSIST)
-    public Set<Account> getAccounts() {
-        return accounts;
+    @OneToMany(targetEntity = Transaction.class, fetch = FetchType.LAZY, mappedBy = "currency", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    public Set<Transaction> getTransactions() {
+        return transactions;
     }
 
-    public void setAccounts(Set<Account> accounts) {
-        this.accounts = accounts;
+    public void setAccounts(Set<Transaction> accounts) {
+        this.transactions = transactions;
     }
 
     @Override
@@ -98,12 +97,12 @@ public class Currency implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Currency that = (Currency) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(symbol, that.symbol) && Objects.equals(createdDate, that.createdDate) && Objects.equals(accounts, that.accounts);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(symbol, that.symbol) && Objects.equals(createdDate, that.createdDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, description, symbol, createdDate, accounts);
+        return Objects.hash(id, name, description, symbol, createdDate);
     }
 
     @Override
@@ -114,7 +113,6 @@ public class Currency implements Serializable {
                 ", description='" + description + '\'' +
                 ", symbol='" + symbol + '\'' +
                 ", createdDate=" + createdDate +
-                ", accounts=" + accounts +
                 '}';
     }
 }

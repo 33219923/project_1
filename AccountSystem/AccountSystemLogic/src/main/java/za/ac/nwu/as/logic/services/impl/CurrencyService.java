@@ -4,11 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 import za.ac.nwu.as.domain.dto.CurrencyDto;
 import za.ac.nwu.as.logic.services.ICurrencyService;
 import za.ac.nwu.as.translator.services.ICurrencyTranslator;
-import za.ac.nwu.as.translator.models.request.UpsertCurrencyRequest;
 
 import javax.transaction.Transactional;
 import java.util.List;

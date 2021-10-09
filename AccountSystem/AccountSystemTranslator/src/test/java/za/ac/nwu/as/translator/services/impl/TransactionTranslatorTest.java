@@ -7,25 +7,24 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
-import za.ac.nwu.as.repository.persistence.AccountRepository;
-import za.ac.nwu.as.repository.persistence.CurrencyRepository;
+import za.ac.nwu.as.repository.persistence.TransactionRepository;
 
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-public class AccountTranslatorTest {
+public class TransactionTranslatorTest {
 
     @Mock
-    private AccountRepository accountRepository;
+    private TransactionRepository transactionRepository;
 
     @InjectMocks
-    private AccountTranslator accountTranslator;
+    private TransactionTranslator transactionTranslator;
 
     @Before
     public void setUp() throws Exception {
         //Ensure dependencies have been set up and injected correctly
-        assertNotNull("AccountRepository could not be mocked!", accountRepository);
-        assertNotNull("An instance of AccountTranslator could not be created!", accountTranslator);
+        assertNotNull("TransactionRepository could not be mocked!", transactionRepository );
+        assertNotNull("An instance of TransactionTranslator could not be created!", transactionTranslator);
     }
 
     @After

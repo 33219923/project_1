@@ -1,5 +1,7 @@
 package za.ac.nwu.as.translator.services.impl;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import za.ac.nwu.as.domain.dto.CurrencyDto;
@@ -15,6 +17,7 @@ import java.util.List;
 @Component
 public class CurrencyTranslator implements ICurrencyTranslator {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyTranslator.class);
     private final CurrencyRepository currencyRepository;
 
     @Autowired
@@ -22,6 +25,7 @@ public class CurrencyTranslator implements ICurrencyTranslator {
         this.currencyRepository = currencyRepository;
     }
 
+    @Override
     public List<CurrencyDto> getAllCurrencies() {
         List<CurrencyDto> list = new ArrayList<>();
         try {
@@ -29,6 +33,7 @@ public class CurrencyTranslator implements ICurrencyTranslator {
                 list.add(new CurrencyDto(tempCurrency));
             }
         } catch (Exception e) {
+            LOGGER.error("Database error: {}", e);
             throw new RuntimeException("Failed to retrieve currency list from the database.", e);
         }
         return list;
@@ -40,6 +45,7 @@ public class CurrencyTranslator implements ICurrencyTranslator {
             Currency tempCurrency = currencyRepository.save(currencyDto.getCurrency());
             return new CurrencyDto(tempCurrency);
         } catch (Exception e) {
+            LOGGER.error("Database error: {}", e);
             throw new RuntimeException("Failed to upsert the currency in the database.", e);
         }
     }

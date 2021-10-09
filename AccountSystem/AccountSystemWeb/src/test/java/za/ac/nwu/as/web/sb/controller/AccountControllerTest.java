@@ -10,22 +10,9 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-import springfox.documentation.spring.web.json.Json;
-import springfox.documentation.spring.web.json.JsonSerializer;
-import za.ac.nwu.as.domain.service.GeneralResponse;
-import za.ac.nwu.as.logic.services.impl.AccountService;
-import za.ac.nwu.as.translator.models.request.DecreaseAccountBalanceRequest;
-
-import static org.junit.Assert.*;
-import static org.mockito.AdditionalAnswers.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import za.ac.nwu.as.logic.services.impl.TransactionService;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
@@ -38,10 +25,10 @@ public class AccountControllerTest {
     private ObjectMapper objectMapper = new ObjectMapper();
 
     @Mock
-    private AccountService accountService;
+    private TransactionService accountService;
 
     @InjectMocks
-    private AccountController accountController;
+    private TransactionController accountController;
 
     private MockMvc mockMvc;
 

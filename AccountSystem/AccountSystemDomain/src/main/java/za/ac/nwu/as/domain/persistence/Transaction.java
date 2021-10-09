@@ -11,16 +11,19 @@ import java.util.Objects;
 @Table(name="TRANSACTIONS" )
 public class Transaction implements Serializable {
     private Long id;
-    private Account account;
+    private Long memberId;
     private TransactionType type;
-    private double value;
+    private Double value;
     private LocalDate createdDate;
+
+    private Currency currency;
 
     public Transaction() {
     }
 
-    public Transaction(Long id, TransactionType type, double value, LocalDate createdDate) {
+    public Transaction(Long id,Long memberId, TransactionType type, double value, LocalDate createdDate) {
         this.id = id;
+        this.memberId = memberId;
         this.type = type;
         this.value = value;
         this.createdDate = createdDate;
@@ -34,18 +37,18 @@ public class Transaction implements Serializable {
         return id;
     }
 
-    @ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="ACCOUNT_ID")
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
-
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="CURRENCY_ID")
+    public Currency getCurrency() {
+        return currency;
+    }
+
+    public void setCurrency(Currency currency) {
+        this.currency = currency;
     }
 
     @Enumerated(EnumType.STRING)
@@ -81,22 +84,23 @@ public class Transaction implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return Double.compare(that.value, value) == 0 && Objects.equals(id, that.id) && Objects.equals(account, that.account) && type == that.type && Objects.equals(createdDate, that.createdDate);
+        return Double.compare(that.value, value) == 0 && Objects.equals(id, that.id) && Objects.equals(memberId, that.memberId) && type == that.type && Objects.equals(createdDate, that.createdDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, account, type, value, createdDate);
+        return Objects.hash(id, memberId, type, value, createdDate, currency);
     }
 
     @Override
     public String toString() {
         return "Transaction{" +
                 "id=" + id +
-                ", account=" + account +
+                ", memberId=" + memberId +
                 ", type=" + type +
                 ", value=" + value +
                 ", createdDate=" + createdDate +
+                ", currency=" + currency +
                 '}';
     }
 }

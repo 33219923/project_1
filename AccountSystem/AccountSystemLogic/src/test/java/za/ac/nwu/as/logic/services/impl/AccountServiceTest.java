@@ -7,8 +7,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.test.context.junit4.SpringRunner;
-import za.ac.nwu.as.translator.services.impl.AccountTranslator;
-import za.ac.nwu.as.translator.services.impl.CurrencyTranslator;
+import za.ac.nwu.as.translator.services.impl.TransactionTranslator;
 
 import static org.junit.Assert.*;
 
@@ -16,10 +15,10 @@ import static org.junit.Assert.*;
 public class AccountServiceTest {
 
     @Mock
-    private AccountTranslator accountTranslator;
+    private TransactionTranslator accountTranslator;
 
     @InjectMocks
-    private AccountService accountService;
+    private TransactionService accountService;
 
     @Before
     public void setUp() throws Exception {

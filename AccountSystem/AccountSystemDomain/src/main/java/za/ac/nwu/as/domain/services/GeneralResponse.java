@@ -1,4 +1,4 @@
-package za.ac.nwu.as.domain.service;
+package za.ac.nwu.as.domain.services;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

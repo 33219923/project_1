@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import za.ac.nwu.as.domain.dto.CurrencyDto;
-import za.ac.nwu.as.domain.service.GeneralResponse;
+import za.ac.nwu.as.domain.services.GeneralResponse;
 import za.ac.nwu.as.logic.services.ICurrencyService;
 import za.ac.nwu.as.translator.models.request.UpsertCurrencyRequest;
 
