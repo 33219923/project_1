@@ -5,10 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import za.ac.nwu.as.domain.dto.CurrencyDto;
+import za.ac.nwu.as.domain.exceptions.CustomException;
 import za.ac.nwu.as.logic.services.ICurrencyService;
 import za.ac.nwu.as.translator.services.ICurrencyTranslator;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional
@@ -22,15 +24,35 @@ public class CurrencyService implements ICurrencyService {
     @Autowired
     public CurrencyService(ICurrencyTranslator currencyTranslator) {
         this.currencyTranslator = currencyTranslator;
+
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("Service instantiated: " + this.getClass().getSimpleName() + " Time: " + System.nanoTime());
     }
 
     @Override
     public List<CurrencyDto> listAll() {
-        return currencyTranslator.getAllCurrencies();
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
+
+        return this.currencyTranslator.getAllCurrencies();
     }
 
     @Override
-    public CurrencyDto upsertCurrency(CurrencyDto currency) {
-        return this.currencyTranslator.upsert(currency);
+    public CurrencyDto upsertCurrency(CurrencyDto currency) throws CustomException {
+        if (LOGGER.isDebugEnabled())
+            LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
+
+        if (0 == currency.getId()) {
+            LOGGER.info("Creating new currency");
+            return this.currencyTranslator.upsert(currency);
+        } else {
+            var existingCurrency = this.currencyTranslator.getCurrencyById(currency.getId());
+            existingCurrency.setName(currency.getName());
+            existingCurrency.setDescription(currency.getDescription());
+            existingCurrency.setSymbol(currency.getSymbol());
+
+            LOGGER.info("Updating existing currency");
+            return this.currencyTranslator.upsert(existingCurrency);
+        }
     }
 }

@@ -29,9 +29,20 @@ public class CurrencyTranslatorTest {
 
     @After
     public void tearDown() throws Exception {
+        //Cleanup
+        currencyRepository = null;
+        currencyTranslator = null;
     }
 
     @Test
     public void getAllCurrencies() {
+    }
+
+    @Test
+    public void getCurrencyById() {
+    }
+
+    @Test
+    public void upsert() {
     }
 }

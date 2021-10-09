@@ -30,8 +30,7 @@
 
         <springfox-swagger.version>2.9.2</springfox-swagger.version>
         <swagger.version>1.5.20</swagger.version>
-<!--        TODO: Change to true once all code is completed     -->
-        <haltOnFailure>false</haltOnFailure>
+        <haltOnFailure>true</haltOnFailure>
     </properties>
 
     <dependencyManagement>

@@ -2,7 +2,7 @@ package za.ac.nwu.as.domain.persistence;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Set;
 
@@ -13,12 +13,13 @@ public class Currency implements Serializable {
     private String name;
     private String description;
     private String symbol;
-    private LocalDate createdDate;
+    private LocalDateTime createdDate;
     private Set<Transaction> transactions;
 
     public Currency() {
     }
-    public Currency(Long id, String name, String description, String symbol, LocalDate createdDate) {
+
+    public Currency(Long id, String name, String description, String symbol, LocalDateTime createdDate) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -26,7 +27,7 @@ public class Currency implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public Currency(Long id, String name, String description, String symbol, LocalDate createdDate, Set<Transaction> transactions) {
+    public Currency(Long id, String name, String description, String symbol, LocalDateTime createdDate, Set<Transaction> transactions) {
         this.id = id;
         this.name = name;
         this.description = description;
@@ -75,20 +76,20 @@ public class Currency implements Serializable {
     }
 
     @Column(name = "CREATED_DATE")
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
-    @OneToMany(targetEntity = Transaction.class, fetch = FetchType.LAZY, mappedBy = "currency", orphanRemoval = true, cascade = CascadeType.PERSIST)
+    @OneToMany(targetEntity = Transaction.class, fetch = FetchType.LAZY, mappedBy = "currency")
     public Set<Transaction> getTransactions() {
         return transactions;
     }
 
-    public void setAccounts(Set<Transaction> accounts) {
+    public void setTransactions(Set<Transaction> transactions) {
         this.transactions = transactions;
     }
 

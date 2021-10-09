@@ -4,7 +4,7 @@ import za.ac.nwu.as.domain.enums.TransactionType;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -13,19 +13,27 @@ public class Transaction implements Serializable {
     private Long id;
     private Long memberId;
     private TransactionType type;
-    private Double value;
-    private LocalDate createdDate;
+    private Double amount;
+    private LocalDateTime createdDate;
 
     private Currency currency;
 
     public Transaction() {
+
     }
 
-    public Transaction(Long id,Long memberId, TransactionType type, double value, LocalDate createdDate) {
+    public Transaction(Long memberId, TransactionType type, Double amount, LocalDateTime createdDate) {
+        this.memberId = memberId;
+        this.type = type;
+        this.amount = amount;
+        this.createdDate = createdDate;
+    }
+
+    public Transaction(Long id,Long memberId, TransactionType type, Double amount, LocalDateTime createdDate) {
         this.id = id;
         this.memberId = memberId;
         this.type = type;
-        this.value = value;
+        this.amount = amount;
         this.createdDate = createdDate;
     }
 
@@ -39,6 +47,15 @@ public class Transaction implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    @Column(name = "MEMBER_ID")
+    public Long getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(Long memberId) {
+        this.memberId = memberId;
     }
 
     @ManyToOne(fetch= FetchType.LAZY)
@@ -61,21 +78,21 @@ public class Transaction implements Serializable {
         this.type = type;
     }
 
-    @Column(name = "VALUE")
-    public double getValue() {
-        return value;
+    @Column(name = "amount")
+    public Double getAmount() {
+        return amount;
     }
 
-    public void setValue(double value) {
-        this.value = value;
+    public void setAmount(Double amount) {
+        this.amount = amount;
     }
 
     @Column(name = "CREATED_DATE")
-    public LocalDate getCreatedDate() {
+    public LocalDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(LocalDate createdDate) {
+    public void setCreatedDate(LocalDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -84,12 +101,12 @@ public class Transaction implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Transaction that = (Transaction) o;
-        return Double.compare(that.value, value) == 0 && Objects.equals(id, that.id) && Objects.equals(memberId, that.memberId) && type == that.type && Objects.equals(createdDate, that.createdDate);
+        return Double.compare(that.amount, amount) == 0 && Objects.equals(id, that.id) && Objects.equals(memberId, that.memberId) && type == that.type && Objects.equals(createdDate, that.createdDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, memberId, type, value, createdDate, currency);
+        return Objects.hash(id, memberId, type, amount, createdDate, currency);
     }
 
     @Override
@@ -98,7 +115,7 @@ public class Transaction implements Serializable {
                 "id=" + id +
                 ", memberId=" + memberId +
                 ", type=" + type +
-                ", value=" + value +
+                ", amount=" + amount +
                 ", createdDate=" + createdDate +
                 ", currency=" + currency +
                 '}';

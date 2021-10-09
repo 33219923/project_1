@@ -6,12 +6,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import za.ac.nwu.as.domain.dto.CurrencyDto;
+import za.ac.nwu.as.domain.exceptions.CustomException;
 import za.ac.nwu.as.domain.services.GeneralResponse;
 import za.ac.nwu.as.logic.services.ICurrencyService;
-import za.ac.nwu.as.translator.models.request.UpsertCurrencyRequest;
 
 import java.util.Date;
 import java.util.List;
@@ -30,77 +29,46 @@ public class CurrencyController {
     }
 
     @GetMapping("/list")
-    @ApiOperation(value = "Retrieve All Currencies", notes = "Returns a list of all the available currencies.")
-    public ResponseEntity<GeneralResponse> ListALl() {
+    @ApiOperation(value = "Retrieve all currencies", notes = "Returns a list of all the available currencies.")
+    public ResponseEntity<GeneralResponse<List<CurrencyDto>>> list() {
         var response = new GeneralResponse<List<CurrencyDto>>();
         try {
             var data = currencyService.listAll();
-
-            if (data == null) {
-                response.Success = false;
-                response.ErrorMessage = "Could not retrieve the currencies list.";
-
-                //TODO: Logging
-
-                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-            } else {
-                response.Data = data;
-            }
+            response.Data = data;
         } catch (Exception ex) {
             response.Success = false;
             response.ErrorMessage = "An error occurred, please view the logs in order to see what caused the error.";
-
-            //TODO: Log exception
-
+            LOGGER.error("API error: {}", ex);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/upsertcurrency")
-    @ApiOperation(value = "Upsert Currency", notes = "Create or update an existing currency.")
-    public ResponseEntity<GeneralResponse<CurrencyDto>> UpsertCurrency(@RequestBody() CurrencyDto currencyRequest) {
+    @PostMapping("/upsert")
+    @ApiOperation(value = "Upsert currency", notes = "Create or update an existing currency.")
+    public ResponseEntity<GeneralResponse<CurrencyDto>> upsert(@RequestBody() CurrencyDto currencyDto) {
         var response = new GeneralResponse<CurrencyDto>();
         try {
-
-            //Validate request body
-            if (StringUtils.isEmpty(currencyRequest.getName()) || StringUtils.isEmpty(currencyRequest.getSymbol()) || StringUtils.isEmpty(currencyRequest.getDescription())
-            ) {
-                response.Success = false;
-                response.ErrorMessage = "Required fields cannot be empty.";
-
-                //TODO: Logging
-
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-            }
-
-            var data = currencyService.upsertCurrency(currencyRequest);
-
-            if (data == null) {
-                response.Success = false;
-                response.ErrorMessage = "The currency does not exist and thus could not be updated.";
-
-                //TODO: Logging
-
-                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-            } else {
-                response.Data = data;
-            }
+            var data = currencyService.upsertCurrency(currencyDto);
+            response.Data = data;
+        } catch (CustomException ex) {
+            response.Success = false;
+            response.ErrorMessage = ex.getMessage();
+            LOGGER.error("API error: {}", ex);
+            return new ResponseEntity<>(response, ex.getResponseCode());
         } catch (Exception ex) {
             response.Success = false;
             response.ErrorMessage = "An error occurred, please view the logs in order to see what caused the error.";
-
-            //TODO: Log exception
-
+            LOGGER.error("API error: {}", ex);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping("/healthcheck")
     @ApiOperation(value = "Health check", notes = "Health check is used to ensure the api is up and running.")
     public ResponseEntity<String> HealthCheck() {
-        LOGGER.info("Healthcheck called for {} at {}", this.getClass().getSimpleName(), new Date());
+        LOGGER.info("Health check called for {} at {}", this.getClass().getSimpleName(), new Date());
         return new ResponseEntity<>("The service " + this.getClass().getSimpleName() + " is up and running at " + new Date(), HttpStatus.OK);
     }
 }

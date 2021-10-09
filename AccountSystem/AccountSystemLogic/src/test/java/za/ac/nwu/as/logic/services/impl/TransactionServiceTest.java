@@ -12,19 +12,19 @@ import za.ac.nwu.as.translator.services.impl.TransactionTranslator;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
-public class AccountServiceTest {
+public class TransactionServiceTest {
 
     @Mock
-    private TransactionTranslator accountTranslator;
+    private TransactionTranslator transactionTranslator;
 
     @InjectMocks
-    private TransactionService accountService;
+    private TransactionService transactionService;
 
     @Before
     public void setUp() throws Exception {
         //Ensure dependencies have been set up and injected correctly
-        assertNotNull("AccountTranslator could not be mocked correctly!", accountTranslator);
-        assertNotNull("An instance of AccountService could not created!", accountService);
+        assertNotNull("TransactionTranslator could not be mocked correctly!", transactionTranslator);
+        assertNotNull("An instance of TransactionService could not created!", transactionService);
     }
 
     @After
