@@ -15,6 +15,7 @@ import za.ac.nwu.as.domain.exceptions.CustomException;
 import za.ac.nwu.as.logic.services.ITransactionService;
 import za.ac.nwu.as.domain.services.GeneralResponse;
 
+import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
@@ -36,12 +37,14 @@ public class TransactionController {
     @PostMapping("/add")
     @ApiOperation(value = "Increase balance", notes = "Create a new account if it does not exist and increase the remaining balance of the account.")
     @ApiResponses(value = {
-            @ApiResponse(code = 200, message = "Account Updated/Created", response = GeneralResponse.class),
+            @ApiResponse(code = 201, message = "Transaction created", response = GeneralResponse.class),
             @ApiResponse(code = 400, message = "Bad request", response = GeneralResponse.class),
             @ApiResponse(code = 404, message = "Not found", response = GeneralResponse.class),
-            @ApiResponse(code = 500, message = "Internal Server Error", response = GeneralResponse.class)
+            @ApiResponse(code = 500, message = "An error occurred in the application code", response = GeneralResponse.class)
     })
-    public ResponseEntity<GeneralResponse<TransactionDto>> add(@RequestBody() TransactionDto transactionDto) {
+    @Transactional(rollbackOn = Throwable.class)
+    public ResponseEntity<GeneralResponse<TransactionDto>> add(@RequestBody() TransactionDto transactionDto,
+                                                               @RequestHeader(name = "cause_exception", required = false, defaultValue = "false") Boolean causeException) {
         var response = new GeneralResponse<TransactionDto>();
         try {
             var data = accountService.add(transactionDto);
@@ -57,11 +60,22 @@ public class TransactionController {
             LOGGER.error("API error: {}", ex);
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
         }
+
+        if (causeException) {
+            throw new RuntimeException("Exception triggered by header, rolling back transaction...");
+        }
+
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @PostMapping("/subtract")
     @ApiOperation(value = "Decrease balance", notes = "Decrease the remaining balance of the account. ")
+    @ApiResponses(value = {
+            @ApiResponse(code = 201, message = "Transaction created", response = GeneralResponse.class),
+            @ApiResponse(code = 400, message = "Bad request", response = GeneralResponse.class),
+            @ApiResponse(code = 404, message = "Not found", response = GeneralResponse.class),
+            @ApiResponse(code = 500, message = "An error occurred in the application code", response = GeneralResponse.class)
+    })
     public ResponseEntity<GeneralResponse<TransactionDto>> subtract(@RequestBody() TransactionDto transactionDto) {
         var response = new GeneralResponse<TransactionDto>();
         try {
@@ -83,6 +97,12 @@ public class TransactionController {
 
     @GetMapping("/summaries/{memberId}")
     @ApiOperation(value = "View Balance", notes = "View the remaining account balance for an account.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Summaries retrieved successfully", response = GeneralResponse.class),
+            @ApiResponse(code = 400, message = "Bad request", response = GeneralResponse.class),
+            @ApiResponse(code = 404, message = "Not found", response = GeneralResponse.class),
+            @ApiResponse(code = 500, message = "An error occurred in the application code", response = GeneralResponse.class)
+    })
     public ResponseEntity<GeneralResponse<List<TransactionSummaryDto>>> getSummary(@PathVariable("memberId") Long memberId,
                                                                                    @RequestParam(value = "currencyId", required = false) Long currencyId) {
         var response = new GeneralResponse<List<TransactionSummaryDto>>();
@@ -102,6 +122,10 @@ public class TransactionController {
 
     @GetMapping("/healthcheck")
     @ApiOperation(value = "Health check", notes = "Health check is used to ensure the api is up and running.")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "Api is up and running", response = GeneralResponse.class),
+            @ApiResponse(code = 500, message = "An error occurred in the application code", response = GeneralResponse.class)
+    })
     public ResponseEntity<String> HealthCheck() {
         LOGGER.info("Health check called for {} at {}", this.getClass().getSimpleName(), new Date());
         return new ResponseEntity<>("The service " + this.getClass().getSimpleName() + " is up and running at " + new Date(), HttpStatus.OK);

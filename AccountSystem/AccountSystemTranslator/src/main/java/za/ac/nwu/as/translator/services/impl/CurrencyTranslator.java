@@ -11,11 +11,9 @@ import za.ac.nwu.as.domain.persistence.Currency;
 import za.ac.nwu.as.repository.persistence.CurrencyRepository;
 import za.ac.nwu.as.translator.services.ICurrencyTranslator;
 
-import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
-@Transactional
 @Component
 public class CurrencyTranslator implements ICurrencyTranslator {
 

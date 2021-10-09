@@ -21,13 +21,20 @@ public class TransactionDto implements Serializable {
         this.createdDate = LocalDateTime.now();
     }
 
-    public TransactionDto(Long id, Long memberId,Long currencyId, Double amount, TransactionType type, LocalDateTime createdDate) {
+    public TransactionDto(Long id, Long memberId, Long currencyId, Double amount) {
         this();
         this.id = id;
         this.memberId = memberId;
         this.currencyId = currencyId;
         this.amount = amount;
-        this.type = type;
+    }
+
+    public TransactionDto(Long id, Long memberId, Long currencyId, Double amount, LocalDateTime createdDate) {
+        this();
+        this.id = id;
+        this.memberId = memberId;
+        this.currencyId = currencyId;
+        this.amount = amount;
         this.createdDate = createdDate;
     }
 
@@ -73,7 +80,7 @@ public class TransactionDto implements Serializable {
     }
 
     @ApiModelProperty(
-            name = "memberId",
+            name = "currencyId",
             example = "1",
             notes = "The unique identifier of the currency.",
             dataType = "java.lang.Long",

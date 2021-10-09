@@ -87,9 +87,12 @@
                             <rule>
                                 <element>CLASS</element>
                                 <excludes>
-                                    <exclude>za.ac.nwu.as.domain.config.LogicConfig</exclude>
+                                    <exclude>za.ac.nwu.as.logic.config.LogicConfig</exclude>
                                     <exclude>za.ac.nwu.as.translator.config.TranslatorConfig</exclude>
                                     <exclude>za.ac.nwu.as.repository.config.RepositoryConfig</exclude>
+                                    <exclude>za.ac.nwu.as.web.sb.config.SwaggerConfiguration</exclude>
+                                    <exclude>za.ac.nwu.as.web.sb.config.WebConfig</exclude>
+                                    <exclude>za.ac.nwu.as.web.sb.RestServiceApplication</exclude>
                                 </excludes>
                                 <limits>
                                     <limit>

@@ -25,24 +25,22 @@ public class CurrencyService implements ICurrencyService {
     public CurrencyService(ICurrencyTranslator currencyTranslator) {
         this.currencyTranslator = currencyTranslator;
 
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("Service instantiated: " + this.getClass().getSimpleName() + " Time: " + System.nanoTime());
+        LOGGER.debug("Service instantiated: " + this.getClass().getSimpleName() + " Time: " + System.nanoTime());
     }
 
     @Override
     public List<CurrencyDto> listAll() {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
+        LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
 
         return this.currencyTranslator.getAllCurrencies();
     }
 
     @Override
     public CurrencyDto upsertCurrency(CurrencyDto currency) throws CustomException {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
+        LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
 
         if (0 == currency.getId()) {
+            currency.setCreatedDate(LocalDateTime.now());
             LOGGER.info("Creating new currency");
             return this.currencyTranslator.upsert(currency);
         } else {

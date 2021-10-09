@@ -11,10 +11,8 @@ import za.ac.nwu.as.domain.persistence.Transaction;
 import za.ac.nwu.as.repository.persistence.TransactionRepository;
 import za.ac.nwu.as.translator.services.ITransactionTranslator;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Transactional
 @Component
 public class TransactionTranslator implements ITransactionTranslator {
 

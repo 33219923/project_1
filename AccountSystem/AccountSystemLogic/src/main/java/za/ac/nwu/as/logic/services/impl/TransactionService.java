@@ -14,6 +14,7 @@ import za.ac.nwu.as.translator.services.ICurrencyTranslator;
 import za.ac.nwu.as.translator.services.ITransactionTranslator;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Transactional
@@ -30,23 +31,20 @@ public class TransactionService implements ITransactionService {
         this.transactionTranslator = transactionTranslator;
         this.currencyTranslator = currencyTranslator;
 
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("Service instantiated: " + this.getClass().getSimpleName() + " Time: " + System.nanoTime());
+        LOGGER.debug("Service instantiated: " + this.getClass().getSimpleName() + " Time: " + System.nanoTime());
     }
 
     @Override
     public TransactionDto add(TransactionDto transaction) throws CustomException {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
+        LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
 
         //Validate the request
         if (0 == transaction.getMemberId()) {
-            if (LOGGER.isDebugEnabled()) LOGGER.debug("Member id is zero. Throwing custom exception with bad request.");
+            LOGGER.debug("Member id is zero. Throwing custom exception with bad request.");
             throw new CustomException("The member id cannot be null or zero.", HttpStatus.BAD_REQUEST);
         }
         if (0 == transaction.getCurrencyId()) {
-            if (LOGGER.isDebugEnabled())
-                LOGGER.debug("Currency id is zero. Throwing custom exception with bad request.");
+            LOGGER.debug("Currency id is zero. Throwing custom exception with bad request.");
             throw new CustomException("The currency id cannot be null or zero.", HttpStatus.BAD_REQUEST);
         }
 
@@ -58,20 +56,19 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public TransactionDto subtract(TransactionDto transaction) throws CustomException {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
+        LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
 
         //Validate the request
         if (0 == transaction.getMemberId()) {
-            if (LOGGER.isDebugEnabled()) LOGGER.debug("Member id is zero. Throwing custom exception with bad request.");
+            LOGGER.debug("Member id is zero. Throwing custom exception with bad request.");
             throw new CustomException("The member id cannot be null or zero.", HttpStatus.BAD_REQUEST);
         }
         if (0 == transaction.getCurrencyId()) {
-            if (LOGGER.isDebugEnabled())
-                LOGGER.debug("Currency id is zero. Throwing custom exception with bad request.");
+            LOGGER.debug("Currency id is zero. Throwing custom exception with bad request.");
             throw new CustomException("The currency id cannot be null or zero.", HttpStatus.BAD_REQUEST);
         }
 
+        transaction.setCreatedDate(LocalDateTime.now());
         transaction.setType(TransactionType.SUBTRACT);
         var currency = this.currencyTranslator.getCurrencyById(transaction.getCurrencyId());
 
@@ -80,8 +77,7 @@ public class TransactionService implements ITransactionService {
 
     @Override
     public List<TransactionSummaryDto> getTransactionSummaries(Long memberId, Long currencyId) {
-        if (LOGGER.isDebugEnabled())
-            LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
+        LOGGER.debug("Service Called: " + this.getClass().getSimpleName() + " Method " + this.getClass().getEnclosingMethod() + " Time: " + System.nanoTime());
 
         return this.transactionTranslator.getTransactionSummaries(memberId, currencyId);
     }
