@@ -1,8 +1,10 @@
 package za.ac.nwu.as.web.sb.controller;
 
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import net.bytebuddy.implementation.bind.annotation.Default;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,7 +105,9 @@ public class TransactionController {
             @ApiResponse(code = 404, message = "Not found", response = GeneralResponse.class),
             @ApiResponse(code = 500, message = "An error occurred in the application code", response = GeneralResponse.class)
     })
-    public ResponseEntity<GeneralResponse<List<TransactionSummaryDto>>> getSummary(@PathVariable("memberId") Long memberId,
+    public ResponseEntity<GeneralResponse<List<TransactionSummaryDto>>> getSummary(
+            @ApiParam(name = "memberId", example = "1", required = true)
+            @PathVariable(value = "memberId") Long memberId,
                                                                                    @RequestParam(value = "currencyId", required = false) Long currencyId) {
         var response = new GeneralResponse<List<TransactionSummaryDto>>();
         try {
