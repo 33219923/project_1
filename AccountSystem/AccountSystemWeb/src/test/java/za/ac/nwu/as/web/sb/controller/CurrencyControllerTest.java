@@ -20,7 +20,6 @@ import za.ac.nwu.as.domain.dto.TransactionDto;
 import za.ac.nwu.as.domain.exceptions.CustomException;
 import za.ac.nwu.as.domain.services.GeneralResponse;
 import za.ac.nwu.as.logic.services.impl.CurrencyService;
-import za.ac.nwu.as.logic.services.impl.TransactionService;
 
 import java.util.ArrayList;
 
@@ -28,13 +27,10 @@ import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-
-import static org.junit.Assert.*;
 import static org.mockito.AdditionalAnswers.*;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
